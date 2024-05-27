@@ -4,29 +4,27 @@
 
 </div>
 
-<div class="demo-pipes">
-    <!-- <div>{{ startDate | date: 'MM/dd/yyyy' }}</div>
-    <div>{{ title | titlecase }}</div>
-    <div>{{ price | currency: 'EUR' }}</div>
-    <div *ngFor="let pair of course | keyvalue">
-        {{ pair.key + ': ' + pair.value }}
-    </div> -->
-</div>
 
-<button (click)="onCoursesEdited()">Edit Courses</button>
 
-<div class="courses" #containerRef>
+<div class="courses" *ngIf="courses[0] as course">
 
-    @for(course of courses | slice: 0:5; track course.id; let first = $first;
-    let last = $last; let even = $even; let odd = $odd) {
+    <ng-template #blankImage let-courseName="description">
 
-    <course-card (courseSelected)="onCardClicked($event)" [course]="course" [class.is-first]="first"
-        [class.is-last]="last" [class.is-even]="even" [class.is-odd]="odd" />
-    }
+        <p class="warn">{{courseName}} has no image yet.</p>
 
-    @empty {
-    <h1>No courses found!</h1>
-    }
-    <!-- <course-card (courseSelected)="onCardClicked($event)" [course]="courses[0]" #cardRef /> -->
+        <img src="/assets/empty-image.png">
+
+    </ng-template>
+
+    <course-card (courseSelected)="onCourseSelected($event)" [course]="course" [noImageTpl]="blankImage">
+
+        <course-image [src]="course.iconUrl"></course-image>
+
+        <div class="course-description">
+            {{ course.longDescription }}
+        </div>
+
+    </course-card>
+
 
 </div>
