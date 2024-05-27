@@ -5,15 +5,17 @@
 </div>
 
 <div class="demo-pipes">
-    <div>{{ startDate | date: 'MM/dd/yyyy' }}</div>
+    <!-- <div>{{ startDate | date: 'MM/dd/yyyy' }}</div>
     <div>{{ title | titlecase }}</div>
     <div>{{ price | currency: 'EUR' }}</div>
     <div *ngFor="let pair of course | keyvalue">
         {{ pair.key + ': ' + pair.value }}
-    </div>
+    </div> -->
 </div>
 
-<div class="courses">
+<button (click)="onCoursesEdited()">Edit Courses</button>
+
+<div class="courses" #containerRef>
 
     @for(course of courses | slice: 0:5; track course.id; let first = $first;
     let last = $last; let even = $even; let odd = $odd) {
@@ -25,5 +27,6 @@
     @empty {
     <h1>No courses found!</h1>
     }
+    <!-- <course-card (courseSelected)="onCardClicked($event)" [course]="courses[0]" #cardRef /> -->
 
 </div>
