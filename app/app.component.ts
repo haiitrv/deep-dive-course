@@ -10,11 +10,13 @@ import { Course } from "./model/course";
 export class AppComponent {
   courses = COURSES;
 
-  coreCourse = COURSES[0];
+  title = COURSES[0].description;
 
-  rxjsCourse = COURSES[1];
+  price = 9.99;
 
-  ngrxCourse = COURSES[2];
+  startDate = new Date(2000, 0, 1);
+
+  course = COURSES[0];
 
   onCardClicked(course: Course) {
     console.log("App component - click event bubbled...", course);

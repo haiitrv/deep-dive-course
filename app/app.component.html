@@ -4,10 +4,18 @@
 
 </div>
 
+<div class="demo-pipes">
+    <div>{{ startDate | date: 'MM/dd/yyyy' }}</div>
+    <div>{{ title | titlecase }}</div>
+    <div>{{ price | currency: 'EUR' }}</div>
+    <div *ngFor="let pair of course | keyvalue">
+        {{ pair.key + ': ' + pair.value }}
+    </div>
+</div>
 
 <div class="courses">
 
-    @for(course of courses; track course.id; let first = $first;
+    @for(course of courses | slice: 0:5; track course.id; let first = $first;
     let last = $last; let even = $even; let odd = $odd) {
 
     <course-card (courseSelected)="onCardClicked($event)" [course]="course" [class.is-first]="first"
