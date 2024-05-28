@@ -8,6 +8,7 @@ import {
 import { COURSES } from "../db-data";
 import { Course } from "./model/course";
 import { CourseCardComponent } from "./course-card/course-card.component";
+import { HighlightedDirective } from "./directives/highlighted.directive";
 
 @Component({
   selector: "app-root",
@@ -30,6 +31,9 @@ export class AppComponent {
 
   @ViewChild("containerRef")
   containerDiv: ElementRef;
+
+  @ViewChild(CourseCardComponent, { read: HighlightedDirective })
+  highlighted: HighlightedDirective;
 
   @ViewChildren(CourseCardComponent)
   cards: QueryList<CourseCardComponent>;
@@ -61,5 +65,9 @@ export class AppComponent {
       category: "INTERMEDIATE",
       lessonsCount: 10,
     });
+  }
+
+  onToggle(isHighlighted: boolean) {
+    console.log(isHighlighted);
   }
 }
