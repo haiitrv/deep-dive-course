@@ -1,73 +1,26 @@
-import {
-  Component,
-  ElementRef,
-  QueryList,
-  ViewChild,
-  ViewChildren,
-} from "@angular/core";
-import { COURSES } from "../db-data";
+import { Component, OnInit } from "@angular/core";
+import { Observable } from "rxjs";
 import { Course } from "./model/course";
-import { CourseCardComponent } from "./course-card/course-card.component";
-import { HighlightedDirective } from "./directives/highlighted.directive";
+import { CoursesService } from "./services/courses.service";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
 })
-export class AppComponent {
-  courses = COURSES;
+export class AppComponent implements OnInit {
+  courses$: Observable<{ payload: Course[] }>;
+  courses: Course[];
+  constructor(private coursesService: CoursesService) {}
 
-  title = COURSES[0].description;
+  ngOnInit() {
+    this.courses$ = this.coursesService.loadCourses();
+  }
 
-  price = 9.99;
-
-  startDate = new Date(2000, 0, 1);
-
-  course = COURSES[0];
-
-  @ViewChild("cardRef")
-  card: CourseCardComponent;
-
-  @ViewChild("containerRef")
-  containerDiv: ElementRef;
-
-  @ViewChild(CourseCardComponent, { read: HighlightedDirective })
-  highlighted: HighlightedDirective;
-
-  @ViewChildren(CourseCardComponent)
-  cards: QueryList<CourseCardComponent>;
-
-  constructor() {}
-
-  ngAfterViewInit(): void {
-    // console.log("After View Init", this.containerDiv);
-    // console.log(this.cards.first);
-    this.cards.changes.subscribe((cards) => {
-      console.log(cards);
+  save(course: Course) {
+    this.coursesService.saveCourses(course).subscribe(() => {
+      console.log("Saved");
+      this.coursesService.loadCourses();
     });
-  }
-
-  onCardClicked(course: Course) {
-    console.log("App component - click event bubbled...", course);
-    console.log("View Child", this.card);
-    console.log("Container Div", this.containerDiv);
-  }
-
-  onCoursesEdited() {
-    this.courses.push({
-      id: 1,
-      description: "Angular Core Deep Dive",
-      iconUrl:
-        "https://s3-us-west-1.amazonaws.com/angular-university/course-images/angular-core-in-depth-small.png",
-      longDescription:
-        "A detailed walk-through of the most important part of Angular - the Core and Common modules",
-      category: "INTERMEDIATE",
-      lessonsCount: 10,
-    });
-  }
-
-  onToggle(isHighlighted: boolean) {
-    console.log(isHighlighted);
   }
 }
