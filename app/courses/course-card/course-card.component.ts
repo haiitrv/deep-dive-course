@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Course } from "../model/course";
+import { Course } from "../../model/course";
 import { CoursesService } from "../services/courses.service";
 
 @Component({

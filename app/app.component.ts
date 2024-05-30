@@ -1,9 +1,10 @@
 import { Component, Inject, InjectionToken, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { Course } from "./model/course";
-import { CoursesService } from "./services/courses.service";
+import { CoursesService } from "./courses/services/courses.service";
 import { HttpClient } from "@angular/common/http";
 import { APP_CONFIG, AppConfig, CONFIG_TOKEN } from "./config";
+import { COURSES } from "src/db-data";
 
 // function coursesServiceProvider(http: HttpClient): CoursesService {
 //   return new CoursesService(http);
@@ -29,8 +30,8 @@ import { APP_CONFIG, AppConfig, CONFIG_TOKEN } from "./config";
   ],
 })
 export class AppComponent implements OnInit {
-  courses$: Observable<{ payload: Course[] }>;
-  courses: Course[];
+  // courses$: Observable<{ payload: Course[] }>;
+  courses: Course[] = COURSES;
   constructor(
     private coursesService: CoursesService,
     @Inject(CONFIG_TOKEN) private config: AppConfig
@@ -39,7 +40,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.courses$ = this.coursesService.loadCourses();
+    // this.courses$ = this.coursesService.loadCourses();
   }
 
   save(course: Course) {
