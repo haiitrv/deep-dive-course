@@ -1,10 +1,18 @@
-import { Component, Inject, InjectionToken, OnInit } from "@angular/core";
+import {
+  Component,
+  Inject,
+  InjectionToken,
+  Injector,
+  OnInit,
+} from "@angular/core";
 import { Observable } from "rxjs";
 import { Course } from "./model/course";
 import { CoursesService } from "./courses/services/courses.service";
 import { HttpClient } from "@angular/common/http";
 import { APP_CONFIG, AppConfig, CONFIG_TOKEN } from "./config";
 import { COURSES } from "src/db-data";
+import { CourseTitleComponent } from "./course-title/course-title.component";
+import { createCustomElement } from "@angular/elements";
 
 // function coursesServiceProvider(http: HttpClient): CoursesService {
 //   return new CoursesService(http);
@@ -35,13 +43,18 @@ export class AppComponent implements OnInit {
   coursesTotal = this.courses.length;
   constructor(
     private coursesService: CoursesService,
-    @Inject(CONFIG_TOKEN) private config: AppConfig
+    @Inject(CONFIG_TOKEN) private config: AppConfig,
+    private injector: Injector
   ) {
     console.log(config);
   }
 
   ngOnInit() {
     // this.courses$ = this.coursesService.loadCourses();
+    const htmlElement = createCustomElement(CourseTitleComponent, {
+      injector: this.injector,
+    });
+    customElements.define(".course-title", htmlElement);
   }
 
   save(course: Course) {

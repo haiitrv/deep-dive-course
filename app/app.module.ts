@@ -7,9 +7,10 @@ import { AppComponent } from "./app.component";
 import { CoursesModule } from "./courses/courses.module";
 import { HighlightedDirective } from "./courses/directives/highlighted.directive";
 import { NgxUnlessDirective } from "./courses/directives/ngx-unless.directive";
+import { CourseTitleComponent } from "./course-title/course-title.component";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, CourseTitleComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
