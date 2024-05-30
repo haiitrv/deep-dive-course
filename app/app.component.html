@@ -6,10 +6,23 @@
 
 <div>
 
+    <div class="demo">
+        <button (click)="onEditCourse()" i18n="@@editCourseTitle">Edit Course</button>
+
+        <div i18n>
+            {coursesTotal, plural,
+            =0 {No courses available.}
+            =1 {One course is available.}
+            other {A total of {{ coursesTotal }} courses are available.}
+            }
+        </div>
+
+    </div>
     <!-- <div class="courses" *ngIf="(courses$ | async)?.payload as courses"> -->
+
+    <div i18n>Welcome to the Angular Core Deep Dive</div>
     <div class="courses">
-        <course-card *ngFor="let course of (courses | filterByCategory: 'BEGINNER')" (courseChanged)="save($event)"
-            [course]="course">
+        <course-card *ngFor="let course of (courses)" (courseChanged)="save($event)" [course]="course">
 
             <course-image [src]="course.iconUrl"></course-image>
 

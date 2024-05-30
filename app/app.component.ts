@@ -32,6 +32,7 @@ import { COURSES } from "src/db-data";
 export class AppComponent implements OnInit {
   // courses$: Observable<{ payload: Course[] }>;
   courses: Course[] = COURSES;
+  coursesTotal = this.courses.length;
   constructor(
     private coursesService: CoursesService,
     @Inject(CONFIG_TOKEN) private config: AppConfig
@@ -49,4 +50,6 @@ export class AppComponent implements OnInit {
       this.coursesService.loadCourses();
     });
   }
+
+  onEditCourse() {}
 }
