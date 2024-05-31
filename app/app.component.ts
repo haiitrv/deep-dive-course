@@ -4,6 +4,9 @@ import {
   InjectionToken,
   Injector,
   OnInit,
+  computed,
+  effect,
+  signal,
 } from "@angular/core";
 import { Observable } from "rxjs";
 import { Course } from "./model/course";
@@ -13,6 +16,7 @@ import { APP_CONFIG, AppConfig, CONFIG_TOKEN } from "./config";
 import { COURSES } from "src/db-data";
 import { CourseTitleComponent } from "./course-title/course-title.component";
 import { createCustomElement } from "@angular/elements";
+import { CounterService } from "./courses/services/counter.service";
 
 // function coursesServiceProvider(http: HttpClient): CoursesService {
 //   return new CoursesService(http);
@@ -38,15 +42,51 @@ import { createCustomElement } from "@angular/elements";
   ],
 })
 export class AppComponent implements OnInit {
+  // counter = signal(0);
+
+  derivedCounter = computed(() => {
+    const counter = this.counterService.counter();
+    return counter * 100;
+  });
+  // crs = signal({
+  //   id: 1,
+  //   title: "Angular for beginners",
+  // });
+
+  // crses = signal(["Angular for beginners", "Reactive Angular course"]);
+
   // courses$: Observable<{ payload: Course[] }>;
   courses: Course[] = COURSES;
   coursesTotal = this.courses.length;
   constructor(
     private coursesService: CoursesService,
     @Inject(CONFIG_TOKEN) private config: AppConfig,
-    private injector: Injector
+    private injector: Injector,
+    public counterService: CounterService
   ) {
-    console.log(config);
+    effect(
+      () => {
+        const counterVal = this.counterService.counter();
+        const derivedCounterVal = this.derivedCounter();
+        console.log(
+          `counter: ${counterVal} derived counter: ${derivedCounterVal}`
+        );
+      },
+      {
+        manualCleanup: true,
+      }
+    );
+  }
+
+  increment() {
+    // this.counter++;
+    // this.counter.set(this.counter() + 1);
+    // this.crs.set({
+    //   id: 1,
+    //   title: "Hello",
+    // });
+    // this.crses.update((val) => [...val, "Deep Dive"]);
+    this.counterService.increment();
   }
 
   ngOnInit() {

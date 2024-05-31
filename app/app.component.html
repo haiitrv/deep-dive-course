@@ -4,7 +4,19 @@
 
 </div>
 
-<div>
+<div class="demo">
+    <p>Count value: {{ counterService.counter() }} </p>
+
+    <div>Derived value: {{ derivedCounter() }}</div>
+    <!-- <div>Course Title: {{ crs().title }} </div>
+
+    <div>Courses: {{ crses().join(", ") }} </div> -->
+
+    <button (click)="increment()">Increment</button>
+</div>
+
+
+<!-- <div>
 
     <div class="demo">
         <button (click)="onEditCourse()" i18n="@@editCourseTitle">Edit Course</button>
@@ -18,9 +30,7 @@
         </div>
 
     </div>
-    <!-- <div class="courses" *ngIf="(courses$ | async)?.payload as courses"> -->
 
-    <div i18n>Welcome to the Angular Core Deep Dive</div>
     <div class="courses">
         <course-card *ngFor="let course of (courses)" (courseChanged)="save($event)" [course]="course">
 
@@ -31,4 +41,4 @@
     </div>
 
 
-</div>
+</div> -->
